@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <title>HannaBlog</title>
+</head>
+<body>
+        <nav class="navbar navbar-default navbar-static-top nav navbar-inverse" >
+
+            <div class="container">
+
+              <ul class="nav nav-pills navbar-right ">
+                   {% if not user.is_authenticated %}
+                <li ><a href="{% url 'register' %}"><h3>Register</h3></a></li>
+                <li ><a href="{% url 'login' %}"><h3>LogIn</h3></a></li>
+                  {% endif %}
+               {% if  user.is_authenticated %}
+
+                <li ><a href="{% url 'logout' %}"><h3>LogOut</h3></a></li>
+                <li ><a href="{% url 'post_new' %}"><h3>Add_Blog</h3></a></li>
+
+              {% endif %}
+
+
+              </ul>
+              <h1><a href="/">Hanna's Blog</a></h1>
+            </div>
+        </nav>
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                {% block content %}
+
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

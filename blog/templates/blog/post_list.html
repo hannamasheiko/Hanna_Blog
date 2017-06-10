@@ -1,0 +1,52 @@
+ {% extends 'blog/base.html' %}
+
+<body>
+{% block content %}
+
+    <div class="search">
+    <form method="GET" action="">
+   <div class="content container">
+       <div class="row">
+           <div class="col-md-3">
+               <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search posts" name="q" value="{{ request.GET.q }}"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" value="Search">Search</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+   </div>
+    </form>
+    </div>
+
+                {% for post in object_list %}
+                    <div class="post">
+                        <div class="date">
+                            {{ post.published_date }}
+                        </div>
+                        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                        <p>{{ post.text|linebreaksbr }}</p>
+                    </div>
+                {% endfor %}
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a  href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+{% endblock content %}
+</body>
